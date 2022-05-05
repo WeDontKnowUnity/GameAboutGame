@@ -15,6 +15,6 @@ public class PlayerController : MonoBehaviour
   
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(joystick.Horizontal * speed, rb.velocity.y, joystick.Vertical + speed);
+        rb.velocity = new Vector3(joystick.Horizontal * speed, rb.velocity.y, joystick.Vertical * speed);
     }
 }
