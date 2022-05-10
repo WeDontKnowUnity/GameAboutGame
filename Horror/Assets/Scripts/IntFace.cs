@@ -26,6 +26,9 @@ public class IntFace : MonoBehaviour
     public GameObject inventoryObject;
     public GameObject flashlight;
     public Button flashlightSwitch;
+
+    public GameObject PauseMenu;
+    public static bool GameIsPaused = false;
     
     void Start()
     {
@@ -90,7 +93,23 @@ public class IntFace : MonoBehaviour
 
     public void PauseGame()
     {
-        
+        PauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        GameIsPaused = true;
     }
+
+    public void ResumeGame()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+    }
+
+    public void ExitinMenu()
+    {
+        Application.LoadLevel("MainMenu");
+    }
+
+
     
 }

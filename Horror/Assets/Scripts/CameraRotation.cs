@@ -4,53 +4,27 @@ using UnityEngine;
 
 public class CameraRotation : MonoBehaviour
 {
-
-    bool vertical = false;
-    bool horizontal = false;
-
-    Vector3 startPos;
-
-    void Start()
+    float xSpeed = 2f;
+    float ySpeed = 2f;
+    float x,y;
+    void Update () 
     {
-        startPos = transform.position;
-    }
-    void Update () {
+        if (Input.touchCount > 0)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                Touch touch = Input.GetTouch(0);
 
-        if (Input.touchCount == 1) {
-            var touch = Input.GetTouch(0);
-            switch(Input.GetTouch(0).phase){
-            case TouchPhase.Moved:
-                float swipeDistVertical = (new Vector3(0, touch.deltaPosition.y, 0) - new Vector3(0, startPos.y, 0)).magnitude;              
-                if (swipeDistVertical > 0)                  
-                {                   
-                    float swipeValue = Mathf.Sign(touch.deltaPosition.y - startPos.y);                   
-                    if (swipeValue > 0 || swipeValue < 0)//up swipe     
-                    {
-                        vertical = true;
-                        horizontal = false;
-                    }                               
-                }               
-                float swipeDistHorizontal = (new Vector3(touch.deltaPosition.x,0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;             
-                if (swipeDistHorizontal > 0)                    
-                {                   
-                    float swipeValue = Mathf.Sign(touch.deltaPosition.x - startPos.x);                   
-                    if (swipeValue > 0 || swipeValue < 0)//right swipe
-                    {
-                        horizontal = true;
-                        vertical = false;
-                    }                           
-                }
+                if (touch.position.x > Screen.width / 2)
+                {
+                    x += touch.deltaPosition.x * xSpeed * 0.02f;
+                    y -= touch.deltaPosition.y * ySpeed * 0.02f;
 
-                if(vertical)
-                {
-                    transform.Rotate(touch.deltaPosition.y * 0.3f, 0,0,Space.World);
+                    Quaternion rotation = Quaternion.Euler(y, x, 0f);
+
+                    transform.rotation = rotation;
                 }
-                if(horizontal)
-                {
-                    transform.Rotate(0,touch.deltaPosition.x * 0.3f,0,Space.World);
-                }
-                break;
             }
         }
-}
+    }
 }
