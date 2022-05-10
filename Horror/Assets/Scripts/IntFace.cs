@@ -26,9 +26,6 @@ public class IntFace : MonoBehaviour
     public GameObject inventoryObject;
     public GameObject flashlight;
     public Button flashlightSwitch;
-
-    public GameObject PauseMenu;
-    public static bool GameIsPaused = false;
     
     void Start()
     {
@@ -91,25 +88,76 @@ public class IntFace : MonoBehaviour
         }
     }
 
-    public void PauseGame()
+    public void OpenDoor()
     {
-        PauseMenu.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
+        RaycastHit hit;
+
+        Ray ray = new Ray(UnityEngine.Camera.current.transform.position, UnityEngine.Camera.current.transform.forward);
+
+        int y = -110;
+
+        Quaternion open = Quaternion.Euler(0, y, 0);
+        Quaternion close = Quaternion.Euler(0, 0, 0);
+
+        Quaternion closeV1 = Quaternion.Euler(0, 180, 0);
+        Quaternion openV1 = Quaternion.Euler(0, 70, 0);
+
+        Quaternion closeV2 = Quaternion.Euler(0, 90, 0);
+        Quaternion openV2 = Quaternion.Euler(0, -20, 0);
+
+        Quaternion closeV3 = Quaternion.Euler(0, -90, 0);
+        Quaternion openV3 = Quaternion.Euler(0, -200, 0);
+
+        Quaternion closeV4 = Quaternion.Euler(0, -180, 0);
+        Quaternion openV4 = Quaternion.Euler(0, -290, 0);
+
+        if (Physics.Raycast(ray, out hit, 3))
+        {
+            if (hit.collider.gameObject.tag == "Door")
+            {
+                if (hit.collider.gameObject.transform.rotation == close)
+                {
+                    hit.collider.gameObject.transform.rotation = open;
+                }
+                else if (hit.collider.gameObject.transform.rotation == open)
+                {
+                    hit.collider.gameObject.transform.rotation = close;
+                }
+                else if (hit.collider.gameObject.transform.rotation == openV1)
+                {
+                    hit.collider.gameObject.transform.rotation = closeV1;
+                }
+                else if (hit.collider.gameObject.transform.rotation == closeV1)
+                {
+                    hit.collider.gameObject.transform.rotation = openV1;
+                }
+                else if (hit.collider.gameObject.transform.rotation == openV2)
+                {
+                    hit.collider.gameObject.transform.rotation = closeV2;
+                }
+                else if (hit.collider.gameObject.transform.rotation == closeV2)
+                {
+                    hit.collider.gameObject.transform.rotation = openV2;
+                }
+                else if (hit.collider.gameObject.transform.rotation == openV3)
+                {
+                    hit.collider.gameObject.transform.rotation = closeV3;
+                }
+                else if (hit.collider.gameObject.transform.rotation == closeV3)
+                {
+                    hit.collider.gameObject.transform.rotation = openV3;
+                }
+                else if (hit.collider.gameObject.transform.rotation == openV4)
+                {
+                    hit.collider.gameObject.transform.rotation = closeV4;
+                }
+                else if (hit.collider.gameObject.transform.rotation == closeV4)
+                {
+                    hit.collider.gameObject.transform.rotation = openV4;
+                }
+
+            }
+        }
     }
-
-    public void ResumeGame()
-    {
-        PauseMenu.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-    }
-
-    public void ExitinMenu()
-    {
-        Application.LoadLevel("MainMenu");
-    }
-
-
     
 }

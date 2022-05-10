@@ -6,17 +6,13 @@ public class PauseMenu : MonoBehaviour
 {
     
     public GameObject PauseMenuUI;
-    public GameObject PauseBtn;
-    public GameObject InventBtn;
-    public GameObject Joyst;
+    public GameObject Buttons;
     public static bool GameIsPaused = false;
 
     public void PauseGame()
     {
         PauseMenuUI.SetActive(true);
-        PauseBtn.SetActive(false);
-        InventBtn.SetActive(false);
-        Joyst.SetActive(false);
+        Buttons.SetActive(false);
         Time.timeScale = 1f;
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -25,9 +21,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         PauseMenuUI.SetActive(false);
-        PauseBtn.SetActive(true);
-        InventBtn.SetActive(true);
-        Joyst.SetActive(true);
+        Buttons.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
