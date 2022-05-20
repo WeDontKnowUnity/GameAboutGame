@@ -26,12 +26,32 @@ public class IntFace : MonoBehaviour
     public GameObject inventoryObject;
     public GameObject flashlight;
     public Button flashlightSwitch;
-    
+    public Button OpenDoorbtn;
+
     void Start()
     {
         inventoryObject.SetActive(false);
     }
 
+    void Update()
+    {
+        RaycastHit hit;
+
+        Ray ray = new Ray(transform.position, transform.forward);
+
+        if (Physics.Raycast(ray, out hit, 3))
+        {
+            if (hit.collider.gameObject.tag == "Door")
+            {
+                OpenDoorbtn.gameObject.SetActive(true);
+            }
+            else
+            {
+                OpenDoorbtn.gameObject.SetActive(false);
+            }
+        }
+
+    }
     public bool AddItems(Item item, int amount = 1)
     {
         foreach (InventorySlot slot in items)
@@ -92,7 +112,7 @@ public class IntFace : MonoBehaviour
     {
         RaycastHit hit;
 
-        Ray ray = new Ray(UnityEngine.Camera.current.transform.position, UnityEngine.Camera.current.transform.forward);
+        Ray ray = new Ray(transform.position, transform.forward);
 
         int y = -110;
 
