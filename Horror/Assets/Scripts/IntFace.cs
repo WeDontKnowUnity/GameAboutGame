@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 [System.Serializable]
 public class InventorySlot 
@@ -11,7 +12,7 @@ public class InventorySlot
     public Item item;
     public int amount;
 
-    public InventorySlot (Item item, int amount = 1)
+    public InventorySlot(Item item, int amount = 1)
     {
         this.item = item;
         this.amount = amount;
@@ -26,32 +27,18 @@ public class IntFace : MonoBehaviour
     public GameObject inventoryObject;
     public GameObject flashlight;
     public Button flashlightSwitch;
-    public Button OpenDoorbtn;
-
+    public GameObject PassDoor;
+    public GameObject DoorWithCode;
+    public GameObject Buttons;
+    public TMP_InputField codeDoor;
+    public GameObject FindPairs;
+    public GameObject BackBtn;
+    
     void Start()
     {
         inventoryObject.SetActive(false);
     }
 
-    void Update()
-    {
-        RaycastHit hit;
-
-        Ray ray = new Ray(transform.position, transform.forward);
-
-        if (Physics.Raycast(ray, out hit, 3))
-        {
-            if (hit.collider.gameObject.tag == "Door")
-            {
-                OpenDoorbtn.gameObject.SetActive(true);
-            }
-            else
-            {
-                OpenDoorbtn.gameObject.SetActive(false);
-            }
-        }
-
-    }
     public bool AddItems(Item item, int amount = 1)
     {
         foreach (InventorySlot slot in items)
@@ -105,6 +92,24 @@ public class IntFace : MonoBehaviour
         else
         {
             inventoryObject.SetActive(false);
+        }
+    }
+
+    public void OpenCodeDoor()
+    {
+        if (codeDoor.text == "4961")
+        {
+            Time.timeScale = 1f;
+            PassDoor.SetActive(false);
+            Quaternion open = Quaternion.Euler(0, -110, 0);
+            DoorWithCode.transform.rotation = open;
+            Buttons.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            PassDoor.SetActive(false);
+            Buttons.SetActive(true);
         }
     }
 
@@ -175,7 +180,34 @@ public class IntFace : MonoBehaviour
                 {
                     hit.collider.gameObject.transform.rotation = openV4;
                 }
-
+            }
+            else if (hit.collider.gameObject.tag == "Code")
+            {
+                if (hit.collider.gameObject.transform.rotation == open)
+                {
+                    //
+                }
+                else
+                {
+                    Time.timeScale = 0f;
+                    PassDoor.SetActive(true);
+                    Buttons.SetActive(false);
+                }
+            }
+            else if (hit.collider.gameObject.tag == "FindPairs")
+            {
+                if (hit.collider.gameObject.transform.rotation == openV4)
+                {
+                    //
+                }
+                else
+                {
+                    Time.timeScale = 0f;
+                    FindPairs.SetActive(true);
+                    Buttons.SetActive(false);
+                    BackBtn.SetActive(true);
+                }
+                
             }
         }
     }

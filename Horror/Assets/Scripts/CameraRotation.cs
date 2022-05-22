@@ -6,7 +6,7 @@ public class CameraRotation : MonoBehaviour
 {
     [SerializeField] private FixedJoystick joystick;
     public Transform player;
-    float Speed = 3f;
+    public float Speed = 1.8f;
     float x,y;
     private void FixedUpdate() 
     {
